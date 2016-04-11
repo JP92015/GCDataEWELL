@@ -1,0 +1,38 @@
+Codebook
+Author: Wellnhofer,Ernst                                                                                           Berlin 9th of April 2014
+Subject: Assignment Getting and Cleaning Data Course Project
+Related files:
+Source Data: UCI HAR Dataset by Human Activity Recognition Using 
+
+The location of the source data is supposed to be in a sub-directory named “UCI HAR Dataset” of the R-working directory
+
+The source data include 3 general information files:
+'features_info.txt': shows information about the variables used on the feature vector.
+'features.txt': lists all features.
+'activity_labels.txt': links the class labels with activity names.
+
+
+R-Script: run_analysis.R uses libraries: tidyr,dplyr and data.table
+
+1. Starts with cleaning workspace and continues with loading libraries
+2. Reads measurements and features (X-*.txt) in dataframe using read.table and associated activity-id (Y_*.txt) and subject-id (subject_*.txt)  as numeric values 
+a. for training and 
+b. test samples with 
+3.  Adds subject-id and activity-id to dataframes
+4.  Combines datsets into a new dataframe named Unified_table
+5.  Read variable/feature names as dataframe into an object named variables
+6. Spots mean and std columns by grep and saves the colun indices.
+7. Extracts means and stds from Unified-table, places subject and activity as the first columns of the table and stores the result in a new object Unified_table_red
+8. Select corresponding variable/feature names
+9. Replace regular expressions in selected variable names by "_" using a temporary storage in the variable test
+10. Replace column names by descriptive variable names
+11. Substitute activity column by descriptive text labels using 'activity_labels.txt' and the function: rep_activity_labels=function(s){s=activity_labels[s,2]}
+12. Generate new_table in a loop running through each feature variable by sequential merging grouped sums using summarize and group_by for each feature variable. 
+13. Order data by subject id and activity 
+14. Store data in file new_table.txt
+Columns in new_table.txt are separated by whitespace, which is important for import into EXCEL. 
+
+Further relevant information calculating variables in addition to the source data general information files:
+Mean values grouped by subject and activity were calculated for all features. The have the same dimensions as the original features. The names of the features (variable names) were only slightly modified by replacing regular expressions. For more Information see:
+'features_info.txt': shows information about the variables used on the feature vector.
+'features.txt': lists all features.
